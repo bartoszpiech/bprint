@@ -2,8 +2,6 @@
 #include <unistd.h>
 #include "bprint.h"
 
-/* TODO */
-#define BPRINT_EXTRA
 
 typedef enum {
     WHITE,
@@ -72,6 +70,7 @@ int main() {
     //print_dog(&d);
     //print_cat(&c);
     //blog("Dog: {dog} And a cat: {cat}, other cat: {dog} aaa", &d, &c, &c2);
-    bprint("Point(("blink"{cat}"reset")({cat}),({dog})): {point}SIEMANO", &c, &c2, &d, &(point) { 3.14, 2 });
+    bprintln("Point(("bprint_bold bprint_under"{cat}"bprint_reset")({cat}),({dog})): {point}SIEMANO", &c, &c2, &d, &(point) { 3.14, 2 });
+    bprintln(bprint_red_fg bprint_green_bg"Hello, "bprint_reset "World");
     return 0;
 }

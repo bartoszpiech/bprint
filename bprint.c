@@ -3,6 +3,11 @@
 #include "bstring.h"
 #include "bprint.h"
 
+typedef struct {
+    char *name;
+    bprinter_cb printer_cb;
+} bprinter;
+
 bprinter bprinters[BPRINTERS_SIZE] = { 0 };
 size_t bprinters_size = 0;
 
