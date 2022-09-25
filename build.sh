@@ -2,9 +2,10 @@
 
 CC=gcc
 CFLAGS="-Wall -pedantic -std=c11 -g"
-INC=bstring.c
-OBJ=bstring.o
-SRC=blog.c
+INC=bprint.c
+OBJ=bprint.o
+OBJS="bprint.o bstring.o"
+SRC=bprint_tests.c
 BIN=tests
 
-$CC $CFLAGS -c $INC -o $OBJ && $CC $CFLAGS $SRC $OBJ -o $BIN && ./$BIN
+$CC $CFLAGS -c $INC -o $OBJ && $CC $CFLAGS $SRC $OBJS -o $BIN && ./$BIN
