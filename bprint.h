@@ -3,6 +3,7 @@
 
 #define BPRINTERS_SIZE    128
 
+#ifdef BPRINT_VT100
 /* 
  * VT-100 settings that can be used alongside bprint command, for example:
  * bprintln(bprint_bold"Hello, "bprint_reset bprint_blink"World"bprint_reset);
@@ -33,6 +34,36 @@
 #define bprint_magenta_bg   "\x1b[45m"
 #define bprint_cyan_bg      "\x1b[46m"
 #define bprint_white_bg     "\x1b[47m"
+#endif /* BPRINT_VT100 */
+
+#ifndef BPRINT_VT100
+/* standard attributes */
+#define bprint_reset        ""
+#define bprint_bold         ""
+#define bprint_dim          ""
+#define bprint_under        ""
+#define bprint_blink        ""
+#define bprint_reverse      ""
+#define bprint_hidden       ""
+/* foreground colors */
+#define bprint_black_fg     ""
+#define bprint_red_fg       ""
+#define bprint_green_fg     ""
+#define bprint_yellow_fg    ""
+#define bprint_blue_fg      ""
+#define bprint_magenta_fg   ""
+#define bprint_cyan_fg      ""
+#define bprint_white_fg     ""
+/* background colors */
+#define bprint_black_bg     ""
+#define bprint_red_bg       ""
+#define bprint_green_bg     ""
+#define bprint_yellow_bg    ""
+#define bprint_blue_bg      ""
+#define bprint_magenta_bg   ""
+#define bprint_cyan_bg      ""
+#define bprint_white_bg     ""
+#endif /* BPRINT_VT100 */
 
 typedef long unsigned int size_t;
 typedef void (*bprinter_cb)(void *);

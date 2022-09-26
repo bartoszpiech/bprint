@@ -8,8 +8,45 @@ typedef struct {
     bprinter_cb printer_cb;
 } bprinter;
 
-bprinter bprinters[BPRINTERS_SIZE] = { 0 };
-size_t bprinters_size = 0;
+/* standard printers */
+void print_int(int *p) {
+    printf("%d", *p);
+}
+
+void print_unsigned_int(unsigned int *p) {
+    printf("%u", *p);
+}
+
+void print_double(double *p) {
+    printf("%f", *p);
+}
+
+void print_float(float *p) {
+    printf("%f", *p);
+}
+
+void print_char(char *p) {
+    printf("%c", *p);
+}
+
+void print_cstr(char **p) {
+    printf("%s", *p);
+}
+
+void print_bstr(bstr *p) {
+    printf(bstr_fmt, bstr_arg(*p));
+}
+
+bprinter bprinters[BPRINTERS_SIZE] = { 
+    { "int",    (void(*)(void *))print_int },
+    { "uint",   (void(*)(void *))print_unsigned_int },
+    { "double", (void(*)(void *))print_double },
+    { "float",  (void(*)(void *))print_float },
+    { "char",   (void(*)(void *))print_char },
+    { "cstr",   (void(*)(void *))print_cstr },
+    { "bstr",   (void(*)(void *))print_bstr },
+};
+size_t bprinters_size = 7;
 
 void bprint_register_impl(char *string, bprinter_cb printer_cb) {
     bprinters[bprinters_size++] = (bprinter){ string, printer_cb };
