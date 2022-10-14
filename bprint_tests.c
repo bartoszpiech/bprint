@@ -2,9 +2,23 @@
 #include <unistd.h>
 #include <time.h>
 
-//#define BPRINT_VT100
+#define BPRINT_VT100
 #include "bprint.h"
-#include "bstring.h"
+
+/* dog */
+typedef struct {
+    char *name;
+    char *race;
+} dog;
+
+void print_dog_old(void *d_ptr) {
+    dog *d = d_ptr;
+    printf("This is dog %s, he's %s.", d->name, d->race);
+}
+
+void print_dog(dog *d) {
+    printf("This is dog %s, he's %s.", d->name, d->race);
+}
 
 /* cat */
 typedef struct {
@@ -12,39 +26,39 @@ typedef struct {
     int years;
 } cat;
 
-/* TODO */
-// create the printflike fcn that returns bstring for those purposes
 void print_cat(void *c_ptr) {
     cat *c = c_ptr;
-    printf("This is %s, he's %d years old.", c->name, c->years);
+    printf("This is %s, he's %d years old", c->name, c->years);
+}
+
+/* point */
+typedef struct {
+    double x, y;
+} point;
+
+void print_point(point *ptr) {
+    printf("(%f, %f)", ptr->x, ptr->y);
 }
 
 int main() {
     bprint_register("cat", print_cat);
+    bprint_register("point", print_point);
+    bprint_register("dog", print_dog);
 
-    /*
-    cat kot_andrzej = {
+    dog d = {
+        "Leon",
+        "Pomeranian",
+    };
+    cat c = {
         "Andrew",
         5,
     };
-    */
+    cat c2 = {
+        "Baltazar",
+        23,
+    };
 
-    int i = -1234;
-    unsigned int ui = 123456;
-    double d = 12.3456789;
-    float f = 0.699;
-    char c = 'X';
-    char *cstr = "Ala ma kota";
-    bstr b = bstr_cstr("Bartek ma psa");
-    bprintln("this is an int: {int}", &i);
-    bprintln("this is an unsigned int: {uint}", &ui);
-    bprintln("this is a double: {double}", &d);
-    bprintln("this is a float: {float}", &f);
-    bprintln("this is a character: {char}", &c);
-    bprintln("this is a cstr: {cstr}", &cstr);
-    /* cannot return local variable from a fcn */
-    //bprintln("this is a bstr: {bstr}", &(bstr)bstr_cstr("bartek ma pieska"));
-    bprintln("this is a bstr: {bstr}", &b);
-    bstr_print(bstr_cstr("this is a bstr using bstr_print: bartek ma pieska"));
+    bprintln("These are my animals and my points: "bprint_bold bprint_under"{cat}, "bprint_reset"{cat}, {dog}, {point}", &c, &c2, &d, &(point) { 3.14, 2 });
+    bprintln(bprint_red_fg bprint_green_bg"Hello, "bprint_reset "World");
     return 0;
 }
