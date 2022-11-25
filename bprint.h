@@ -1,7 +1,15 @@
 #ifndef BPRINT_H
 #define BPRINT_H
 
-#define BPRINTERS_SIZE    128
+/* TODO make escape sequences */
+
+#include <stdarg.h>
+
+/* opening and closing braces */
+#define BPRINT_OPENING "{"
+#define BPRINT_CLOSING "}"
+
+#define BPRINTERS_MAX_SIZE	128
 
 #ifdef BPRINT_VT100
 /* 
@@ -66,10 +74,9 @@
 #endif /* BPRINT_VT100 */
 
 typedef long unsigned int size_t;
-typedef void (*bprinter_cb)(void *);
+typedef void (*bprinter_cb)(va_list args);
 
-void        bprint_register_impl(char *string, bprinter_cb printer_cb);
-#define     bprint_register(name, printer_cb) bprint_register_impl(name, (void (*)(void *))printer_cb)
+void        bprint_register(char *string, bprinter_cb printer_cb);
 void        bprint(const char *format, ...);
 void        bprintln(const char *format, ...);
 
